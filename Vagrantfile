@@ -18,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Note: Use Puppetlab's official box (w/ Puppet & Chef installed)
     #
     ####################################################################################################################
+
     config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
 
     ####################################################################################################################
@@ -26,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.define :vlapp do |vlapp|
         vlapp.vm.box = "vLAPP"
-        vlapp.vm.network :public_network, ip: "192.168.50.10"
+        vlapp.vm.network :private_network, ip: "192.168.50.10"
         vlapp.vm.synced_folder "shared", "/vagrant_data"
 
         # Virtualbox
@@ -34,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             v.name = "vLAPP"
         end
 
-        # Puppet
+        # Puppet provisioning
         vlapp.vm.provision :puppet do |puppet|
             puppet.manifests_path = "manifests"
             puppet.manifest_file  = "init.pp"
