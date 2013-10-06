@@ -35,6 +35,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             v.name = "vLAPP"
         end
 
+        # Shell provisioning
+        # - order is important before provisioning Puppet
+        vlapp.vm.provision :shell do |shell|
+            shell.path = "scripts/install-modules.sh"
+        end
+
         # Puppet provisioning
         vlapp.vm.provision :puppet do |puppet|
             puppet.manifests_path = "manifests"
